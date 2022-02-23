@@ -1,34 +1,35 @@
-English | [Русский](README_ru.md)
+Русский | [English](README.md)
 
 ![GitHub top language](https://img.shields.io/github/languages/top/VladimirSinitsin/labelme_converter)
 ![GitHub](https://img.shields.io/github/license/VladimirSinitsin/labelme_converter)
 ![GitHub search hit counter](https://img.shields.io/github/search/VladimirSinitsin/labelme_converter/goto?color=gree)
 
 # LABELME-CONVERTER
-_**Converter LabelMe to MsCOCO, PascalVOC, Yolo formats. Also, possible: splitting dataset into 
-training, test and validation samples; augmentation of converted dataset; output and recording of statistics 
-on images; transformation of the whole dataset to a single resolution.**_
+_**Конвертер разметки из формата LabelMe в форматы: MsCOCO, PascalVOC, Yolo. Также возможны: разбитие датасета на 
+тренировочную, тестовую и валидационную выборки; аугментация конвертированного датасета; вывод и запись статистики 
+по изображениям; трансформация всего датасета к единому разрешению.**_
 
 ```
-Installing the necessary packages
+Установка необходимых пакетов
 >> pip install -r requirements.txt
 ```
 
-The list of classes in the order they appear in the statistics is written in the `.txt` file (by default in `labels.txt`). The name of the 
-file name is specified in `config.py`.
+Список классов в порядке их вывода в статистике прописывается в `.txt` файле (по умолчанию в `labels.txt`). Название 
+файла указывается в `config.py`.
 
-## Converting
-### Start
-The file `labelme_converter.py` with arguments is used for converting:
-- `--input` - directory with dataset in LabelMe format
-- `--output` - (_optional_) directory for storing converted dataset (default: `./current_dataset`)
-- `--format` - format for conversion (`yolo`, `voc`, `coco`)
-- `--create-marked` - (_optional_) indicated if you need pictures with the markup visualization
-- `--poly` - (_optional_) specified if the visualization should be with polygons (not rectangles)
+## Конвертация
+### Запуск
+Для конвертации используется файл `labelme_converter.py` с аргументами:
+- `--input` - директория с датасетом в формате LabelMe
+- `--output` - (_опционально_) директория для хранения конвертированного датасета (по умолчанию `./current_dataset`)
+- `--format` - формат для конвертации (`yolo`, `voc`, `coco`)
+- `--create-marked` - (_опционально_) указывается, если нужны картинки с визуализацией разметки
+- `--poly` - (_опционально_) указывается, если визуализация должна быть с полигонами (не прямоугольники)
 
-### Example
+
+### Пример
 ```
-Converting dataset from ./meters01_labelme to Yolo format with creation of markup visualization
+Конвертация датасета из ./meters01_labelme в формат Yolo с созданием визуализации разметки
 >> python labelme_converter.py --input meters01_labelme --output current_dataset --format yolo --create-marked
 
 Input path:  labelme
@@ -41,19 +42,19 @@ Converting labelme to Yolo:
 100%|██████████████████████████████████████████| 24/24 [00:00<00:00, 8058.87it/s]
 ```
 
-## Split on train, test, val and trainval
-### Start
-The file `split_dataset.py` with arguments is used for partitioning:
-- `--input` - directory with dataset in one of the partitioning formats: MsCOCO, PascalVOC, Yolo
-- `--output` - (_optional_) directory for storing a split dataset (default: `./splitted_dataset`)
-- `--train` - percentage of the total number of pictures which should get into the training set
-- `--test` - the percentage of the total number of pictures, which should go into the test set
-- `--val` - the percentage of the total number of pictures that should go into the validation set
-- `--seed` - (_optional_) value of the initial number of the random number generator (default: `42`)
+## Разбиение на train, test, val и trainval
+### Запуск
+Для разбиения используется файл `split_dataset.py` с аргументами:
+- `--input` - директория с датасетом в одном из форматов разметки: MsCOCO, PascalVOC, Yolo
+- `--output` - (_опционально_) директория для хранения разбитого датасета (по умолчанию `./splitted_dataset`)
+- `--train` - процент от общего количества картинок, которые должны попасть в тренировочный набор
+- `--test` - процент от общего количества картинок, которые должны попасть в тестовый набор
+- `--val` - процент от общего количества картинок, которые должны попасть в валидационный набор
+- `--seed` - (_опционально_) значение начального числа генератора случайных чисел (по умолчанию: `42`)
 
-### Example
+### Пример
 ```
-Partitioning dataset from ./current_dataset in the ratio 80/15/5 with seed equal to 101
+Разбиение датасета из ./current_dataset в соотношении 80/15/5 с seed равным 101
 >> python split_dataset.py --input current_dataset --train 80 --test 15 --val 5 --seed 101
 
 Dataset on current_dataset is being split!
@@ -61,20 +62,20 @@ Output split dataset path: splitted_dataset
 Dataset is splitted!
 ```
 
-## Dataset augmentation
-### Start
-The file `augment_dataset.py` with arguments is used for augmentation:
-- `--input` - a directory with a dataset in one of the markup formats: MsCOCO, PascalVOC, Yolo (dataset can be split)
-- `--output` - (_optional_) directory for storing a partitioned dataset (default: `./augmented_dataset`)
-- `--full` - (_optional_) if you augment all sets in a split dataset, just specify this argument
-- `--train` - (_optional_) augmenting a training set in a split dataset
-- `--test` - (_optional_) augmentation of a test set in a split dataset
-- `--val` - (_optional_) augmentation of validation set in a split dataset
-- `--count` - number of augmented copies of one image
+## Аугментация датасета
+### Запуск
+Для аугментации используется файл `augment_dataset.py` с аргументами:
+- `--input` - директория с датасетом в одном из форматов разметки: MsCOCO, PascalVOC, Yolo (может быть разбитым)
+- `--output` - (_опционально_) директория для хранения разбитого датасета (по умолчанию `./augmented_dataset`)
+- `--full` - (_опционально_) если аугментируете все наборы в разбитом датасете, то просто указать этот аргумент
+- `--train` - (_опционально_) аугментация тренировочного набора в разбитом датасете
+- `--test` - (_опционально_) аугментация тестового набора в разбитом датасете
+- `--val` - (_опционально_) аугментация валидационного набора в разбитом датасете
+- `--count` - количество аугментированных копий одного изображения
 
-### Examples
+### Примеры
 ```
-Augmentation of the entire unsplit set stored in ./current_dataset with 3 copies of each image
+Аугментация всего неразбитого набора, хранящегося в ./current_dataset с 3-мя копиями каждого изображения
 >> python augment_dataset.py --input current_dataset --count 3 
 
 Augmentation train_test_val set:
@@ -82,7 +83,7 @@ Augmentation train_test_val set:
 (meters)
 ```
 ```
-Augmentation of training and test sets from a split dataset (trainval set changes)
+Аугментация тренировочного и тестового наборов из разбитого датасета (набор trainval меняется)
 >> python augment_dataset.py --input splitted_dataset --train --test --count 5
 
 Augmentation train set:
@@ -91,16 +92,16 @@ Augmentation test set:
 100%|██████████████████████████████████████████| 3/3 [00:01<00:00,  2.62it/s]
 ```
 
-## Creating statistics on datasets
-### Start
-The file `statistics_dataset.py` with arguments is used to output and record statistics:
-- `--input` - a directory with a dataset in one of the markup formats: MsCOCO, PascalVOC, Yolo (dataset can be split or augmented)
-- `--save` - (_optional_) if you want to save statistics to a file (`stat.txt`)
-- `--save_path` - (_optional_) if you want to save the file to a specific directory (by default it is saved in the dataset directory)
+## Создание статистики по датасетам
+### Запуск
+Для вывода и записи статистики используется файл `statistics_dataset.py` с аргументами:
+- `--input` - директория с датасетом в одном из форматов разметки: MsCOCO, PascalVOC, Yolo (может быть разбитым или аугментированным)
+- `--save` - (_опционально_) ставится, если надо сохранить статистику в файл (`stat.txt`)
+- `--save_path` - (_опционально_) если надо сохранить файл в конкретную директорию (по умолчанию сохраняется в директорию датасета)
 
-### Examples
+### Примеры
 ```
-Display statistics for a converted dataset with saving to the file
+Вывод статистики по конвертированному датасету с сохранением статистики в файл
 >> python statistics_dataset.py --input current_dataset --save
 
 +------------------------------------------------------------------+
@@ -119,7 +120,7 @@ Display statistics for a converted dataset with saving to the file
 +---------+-------------------+-----------+------------+-----------+
 ```
 ```
-Display statistics for a split dataset without saving to the file
+Вывод статистики по разбитому датасету без сохранения файла
 >> python statistics_dataset.py --input splitted_dataset
 
 +------------------------------------------------------------------+
@@ -182,7 +183,7 @@ Display statistics for a split dataset without saving to the file
 +---------+-------------------+-----------+------------+-----------+
 ```
 ```
-Outputs statistics for an augmented unsplit dataset with the number of copies equal to 5. The statistics are also saved in the path ./stat/stat.txt
+Вывод статистики по аугментированному неразбитому датасету с количеством копий равному 5, также статистика сохраняется по пути ./stat/stat.txt
 >> python statistics_dataset.py --input augmented_dataset --save --save_path stat
 
 +------------------------------------------------------------------+
@@ -201,18 +202,18 @@ Outputs statistics for an augmented unsplit dataset with the number of copies eq
 +---------+-------------------+-----------+------------+-----------+
 ```
 
-## Transformation of all dataset images to the same resolution (with transformation of markup coordinates accordingly).
-### Start
-The file `resize_dataset.py` with arguments is used for the transformation:
-- `--input` - directory with dataset in one of the markup formats: MsCOCO, PascalVOC, Yolo (dataset can be split or augmented)
-- `--output` - (_optional_) directory for saving a new dataset (default: `./resized_dataset`)
-- `--new_w` - width of images in pixels
-- `--new_h` - image height in pixels
+## Трансформация всех изображений датасета к одному разрешению (с трансформацией координат разметки соответственно).
+### Запуск
+Для трансформации используется файл `resize_dataset.py` с аргументами:
+- `--input` - директория с датасетом в одном из форматов разметки: MsCOCO, PascalVOC, Yolo (может быть разбитым или аугментированным)
+- `--output` - (_опционально_) директория для сохранения нового датасета (по умолчанию: `./resized_dataset`)
+- `--new_w` - ширина изображений в пикселях
+- `--new_h` - высота изображений в пикселях
 
-### Example
+### Пример
 ```
-Resize split dataset to 512x512 (in MsCOCO format three process bars are output for split dataset, in others - one)
-Save to default directory: ./resized_dataset
+Ресайз разбитого датасета до 512х512 (в формате MsCOCO для разбитого выводится три процессбара, в остальных - один)
+Сохраняется в директорию по умолчанию: ./resized_dataset
 >> python resize_dataset.py --input splitted_dataset --new_w 512 --new_h 512                        
 
 Resize images in Train set:
