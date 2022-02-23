@@ -2,7 +2,6 @@ import os
 import abc
 import cv2
 import json
-import shutil
 import numpy as np
 
 from tqdm import tqdm
@@ -83,7 +82,7 @@ class Converter:
             image_data['filename'] = json_data['imagePath']
             image_data['height'] = json_data['imageHeight']
             image_data['width'] = json_data['imageWidth']
-            image_data['depth'] = self._get_img_depth(self.input_path + '/' + image_data['filename'])
+            image_data['depth'] = self._get_img_depth(f"{self.input_path}/{image_data['filename']}")
             image_data['objects'] = []
             for shape in json_data['shapes']:
                 object = {}
@@ -92,9 +91,10 @@ class Converter:
                     object['poly_points'] = self._reform_polygon(points=shape['points'],
                                                                  img_width=image_data['width'],
                                                                  img_height=image_data['height'])
+                # [x_min, y_min, x_max, y_max]
                 object['points'] = self._get_coords(points=shape['points'],
                                                     img_width=image_data['width'],
-                                                    img_height=image_data['height'])  # [x_min, y_min, x_max, y_max]
+                                                    img_height=image_data['height'])
                 image_data['objects'].append(object)
             data.append(image_data)
 

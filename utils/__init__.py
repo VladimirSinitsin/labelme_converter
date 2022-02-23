@@ -17,7 +17,7 @@ sys.path.append(SCRIPT_PATH)
 
 # Get labels and labels ids.
 LABELS_ID = {}
-with open(f'{SCRIPT_PATH}/{LABELS_FILE}', 'r') as lr:
+with open(f"{SCRIPT_PATH}/{LABELS_FILE}", 'r') as lr:
     LABELS = lr.read().split('\n')
 for id, label in enumerate(LABELS):
     LABELS_ID[label] = id
@@ -42,13 +42,13 @@ def make_empty_folder(out_path: str) -> None:
 
     :param out_path: path where the directory will be.
     """
-    # make path if not exists
+    # Make path if not exists.
     if not os.path.exists(out_path):
         os.makedirs(out_path)
-    # empty it if anything there
+    # Empty it if anything there.
     directories = os.listdir(out_path)
     for dir in directories:
-        shutil.rmtree(out_path + '/' + dir, ignore_errors=True)
+        shutil.rmtree(f"{out_path}/{dir}", ignore_errors=True)
     files = glob.glob(os.path.join(out_path, '*.*'))
     for f in files:
         os.remove(f)
@@ -68,7 +68,7 @@ def copy_all_images(input_path: str, output_path: str, set: [] = None) -> None:
     files = os.listdir(input_path)
     for file in files:
         if file.split('.')[-1].lower() in exts and (set is None or file in set):
-            file = '/' + file
+            file = f"/{file}"
             shutil.copy2(input_path + file, output_path + file)
 
 

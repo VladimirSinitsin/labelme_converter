@@ -29,13 +29,13 @@ def create_marked_images(input_path: str, output_path: str, labelme_data: list) 
     :param labelme_data: data of objects on images.
     """
     # Make outpath.
-    make_empty_folder(output_path + '/MarkedImages')
+    make_empty_folder(f"{output_path}/MarkedImages")
     print('Create marked images:')
     for image_data in tqdm(labelme_data):
-        image_path = input_path + '/' + image_data['filename']
+        image_path = f"{input_path}/{image_data['filename']}"
         image = cv2.imread(image_path)
         marked_image = mark_image(image, image_data['objects'])
-        cv2.imwrite(output_path + '/MarkedImages/marked_' + image_data['filename'], marked_image)
+        cv2.imwrite(f"{output_path}/MarkedImages/marked_{image_data['filename']}", marked_image)
 
 
 def mark_image(image: np.ndarray, objects: list) -> np.ndarray:
@@ -129,9 +129,9 @@ def draw_text_box(img: np.array, text: str, x: int, y: int,
     :return:
     """
     font = cv2.FONT_HERSHEY_SIMPLEX
-    # get the width and height of the text box
+    # Get the width and height of the text box.
     t_w, t_h = cv2.getTextSize(text, font, fontScale=font_scale, thickness=thickness)[0]
-    # make the coords of the box with a small padding of two pixels
+    # Make the coords of the box with a small padding of two pixels.
     box_coords = [(int(x), int(y + 5)), (int(x + t_w), int(y - t_h))]
     cv2.rectangle(img, box_coords[0], box_coords[1], back_color, cv2.FILLED)
     cv2.putText(img, str(text), (int(x+1), int(y+1)), font, fontScale=font_scale, color=(0, 0, 0), thickness=thickness)

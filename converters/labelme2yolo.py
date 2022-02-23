@@ -10,11 +10,11 @@ from utils import SCRIPT_PATH
 class Converter2yolo(Converter):
     def convert(self) -> None:
         """ Convert labelme dataset to Yolo format. """
-        make_empty_folder(f'{self.output_path}/{YOLO_NAME}')
+        make_empty_folder(f"{self.output_path}/{YOLO_NAME}")
         # Create `dataset.names` and `dataset.data` files.
         self._create_info_files(self.output_path)
 
-        ann_path = f'{self.output_path}/{YOLO_NAME}/dataset_data'
+        ann_path = f"{self.output_path}/{YOLO_NAME}/dataset_data"
         make_empty_folder(ann_path)
         copy_all_images(self.input_path, ann_path)
 
@@ -30,12 +30,12 @@ class Converter2yolo(Converter):
 
         :param output_path: path to save files.
         """
-        with open(f'{output_path}/{YOLO_NAME}/dataset.names', 'w') as wn:
+        with open(f"{output_path}/{YOLO_NAME}/dataset.names", 'w') as wn:
             for label in LABELS_ID.keys():
                 wn.write(label + '\n')
-        with open(f'{output_path}/{YOLO_NAME}/dataset.data', 'w') as wd:
-            wd.write(f'classes = {len(LABELS_ID.keys())} \n')
-            wd.write(f'train = {output_path}/dataset_train_test_val.txt \n')
+        with open(f"{output_path}/{YOLO_NAME}/dataset.data", 'w') as wd:
+            wd.write(f"classes = {len(LABELS_ID.keys())} \n")
+            wd.write(f"train = {output_path}/dataset_train_test_val.txt \n")
             wd.write('backup = path/to/backup/directory')
 
     def _convert_image_data(self, image_data: dict, ann_path: str) -> None:
@@ -45,7 +45,7 @@ class Converter2yolo(Converter):
         :param image_data: data of current image.
         :param ann_path: path to save annotations.
         """
-        txt_filename = '/' + image_data['filename'].split('.')[0] + '.txt'
+        txt_filename = f"/{image_data['filename'].split('.')[0]}.txt"
         with open(ann_path + txt_filename, 'a') as wt:
             for object in image_data['objects']:
                 # [x, y, w, h]
@@ -77,5 +77,5 @@ class Converter2yolo(Converter):
         return list(map(to_fixed, [x, y, w, h]))
 
     def _write_set_row(self, image_filename: str):
-        with open(f'{self.output_path}/{YOLO_NAME}/train_test_val.txt', 'a') as wt:
+        with open(f"{self.output_path}/{YOLO_NAME}/train_test_val.txt", 'a') as wt:
             wt.write(f"{SCRIPT_PATH}/{self.output_path}/{YOLO_NAME}/dataset_data/{image_filename}\n")

@@ -15,18 +15,18 @@ class Converter2coco(Converter):
 
     def convert(self) -> None:
         """ Convert labelme dataset to MsCOCO format. """
-        make_empty_folder(self.output_path + f'/{COCO_NAME}')
+        make_empty_folder(f"{self.output_path}/{COCO_NAME}")
 
         # Copy all images
-        images_path = self.output_path + f'/{COCO_NAME}/TrainTestVal'
+        images_path = f"{self.output_path}/{COCO_NAME}/TrainTestVal"
         make_empty_folder(images_path)
         copy_all_images(self.input_path, images_path)
 
         # Convert labelme to coco format and create JSON annotation.
         coco_format = self._create_coco_format(self.data)
         # Write JSON file.
-        make_empty_folder(self.output_path + f'/{COCO_NAME}/Annotation')
-        with open(self.output_path + f'/{COCO_NAME}/Annotation/TrainTestVal.json', 'w') as outfile:
+        make_empty_folder(f"{self.output_path}/{COCO_NAME}/Annotation")
+        with open(f"{self.output_path}/{COCO_NAME}/Annotation/TrainTestVal.json", 'w') as outfile:
             json.dump(coco_format, outfile, indent=2)
 
     def _create_coco_format(self, labelme_data: np.ndarray) -> dict:

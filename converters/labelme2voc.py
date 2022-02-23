@@ -11,13 +11,13 @@ from utils import make_empty_folder, copy_all_images
 class Converter2voc(Converter):
     def convert(self) -> None:
         """ Convert labelme dataset to PascalVOC format. """
-        make_empty_folder(f'{self.output_path}/{VOC_NAME}')
+        make_empty_folder(f"{self.output_path}/{VOC_NAME}")
 
         # Make subdirectories: `/Annotations`, `/JPEGImages`, `/ImageSets/Main`.
         self._make_dataset_dirs()
 
         # Write images.
-        copy_all_images(self.input_path, f'{self.output_path}/{VOC_NAME}/JPEGImages')
+        copy_all_images(self.input_path, f"{self.output_path}/{VOC_NAME}/JPEGImages")
 
         print('Converting labelme to PascalVOC:')
         for image_data in tqdm(self.data):
@@ -25,9 +25,9 @@ class Converter2voc(Converter):
 
     def _make_dataset_dirs(self) -> None:
         """ Make service directories. """
-        make_empty_folder(f'{self.output_path}/{VOC_NAME}/Annotations')
-        make_empty_folder(f'{self.output_path}/{VOC_NAME}/JPEGImages')
-        make_empty_folder(f'{self.output_path}/{VOC_NAME}/ImageSets/Main')
+        make_empty_folder(f"{self.output_path}/{VOC_NAME}/Annotations")
+        make_empty_folder(f"{self.output_path}/{VOC_NAME}/JPEGImages")
+        make_empty_folder(f"{self.output_path}/{VOC_NAME}/ImageSets/Main")
 
     def _convert_image_data(self, image_data: dict) -> None:
         """
@@ -44,7 +44,7 @@ class Converter2voc(Converter):
             # f.write('<?xml version="1.0" encoding="utf-8"?>\n'.encode())
             f.write(ET.tostring(tree, pretty_print=True))
         # Write base image names in txt set.
-        txt_file_path = f'{self.output_path}/{VOC_NAME}/ImageSets/Main/train_test_val.txt'
+        txt_file_path = f"{self.output_path}/{VOC_NAME}/ImageSets/Main/train_test_val.txt"
         with open(txt_file_path, 'a') as ft:
             ft.write(image_data['filename'].split('.')[0] + '\n')
 
