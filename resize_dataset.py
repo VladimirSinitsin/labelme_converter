@@ -38,9 +38,9 @@ def parse_args():
                         help="Path with dataset.", default=INPUT_PATH)
     parser.add_argument('--output', dest='output_path', type=str,
                         help="Path to save resized dataset.", default=OUTPUT_PATH)
-    parser.add_argument('--new_w', dest='new_w', type=int, required=True,
+    parser.add_argument('--new_w', dest='new_w', type=int,
                         help="New width of images.", default=NEW_W)
-    parser.add_argument('--new_h', dest='new_h', type=int, required=True,
+    parser.add_argument('--new_h', dest='new_h', type=int,
                         help="New height of images.", default=NEW_H)
     args = parser.parse_args()
     return args
