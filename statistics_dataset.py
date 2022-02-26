@@ -37,8 +37,7 @@ def stat(format: str, input_path: str, save: bool, save_path: str) -> None:
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description='Statistic of Yolo/MsCOCO/PascalVOc dataset.')
+    parser = argparse.ArgumentParser(description='Statistic of Yolo/MsCOCO/PascalVOc dataset.')
     parser.add_argument('--input', dest='input_path', type=str,
                         help="Path with dataset.", default=INPUT_PATH)
     parser.add_argument('--save', dest='save', action='store_true',
