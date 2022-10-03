@@ -1,3 +1,5 @@
+from tqdm import tqdm
+
 from config import VOC_NAME
 from utils import get_xml_ann_data
 from utils.format_specifier import is_splitted
@@ -35,7 +37,8 @@ def get_subset_stat(dataset_path: str, subset: str) -> dict:
 
     subset_stat['images_count'] = len(base_names)
 
-    for base_name in base_names:
+    print(f"Calculating statistic for {subset} subset:")
+    for base_name in tqdm(base_names):
         subset_stat = update_stat(dataset_path, subset_stat, base_name)
 
     return subset_stat

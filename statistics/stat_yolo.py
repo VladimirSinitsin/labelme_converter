@@ -1,5 +1,7 @@
 import cv2
 
+from tqdm import tqdm
+
 from config import YOLO_NAME
 from utils import ID2NAMES
 from utils import coords_yolo2voc
@@ -39,7 +41,8 @@ def get_subset_stat(dataset_path: str, subset: str) -> dict:
     subset_stat['images_count'] = len(images_paths)
 
     images_names = [path.split('/')[-1] for path in images_paths if path]
-    for img_name in images_names:
+    print(f"Calculating statistic for {subset} subset:")
+    for img_name in tqdm(images_names):
         subset_stat = update_stat(dataset_path, subset_stat, img_name)
     return subset_stat
 

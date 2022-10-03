@@ -1,5 +1,7 @@
 import json
 
+from tqdm import tqdm
+
 from utils import ID2NAMES
 from config import COCO_NAME
 from utils.format_specifier import is_splitted
@@ -34,7 +36,8 @@ def get_subset_stat(dataset_path: str, subset: str) -> dict:
 
     with open(f'{dataset_path}/{COCO_NAME}/Annotation/{subset}.json', 'rt', encoding='UTF-8') as annotations:
         coco_data = json.load(annotations)
-    for ann in coco_data['annotations']:
+    print(f"Calculating statistic for {subset} subset:")
+    for ann in tqdm(coco_data['annotations']):
         # `subset_stat['images_ids']` is needed to count `subset_stat['images_count']`.
         subset_stat['images_ids'].add(ann['image_id'])
         label_id = ann['category_id'] - 1  # categories in coco start with 1.
