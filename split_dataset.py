@@ -224,7 +224,7 @@ def update_yolo_data(dataset_path: str) -> None:
         wd.write(f'train = {dataset_path}/{YOLO_NAME}/trainval.txt \n')
         wd.write(f'valid = {dataset_path}/{YOLO_NAME}/test.txt \n')
         wd.write(f'names = {dataset_path}/{YOLO_NAME}/dataset.names \n')
-        wd.write('backup = path/to/backup/directory')
+        wd.write('backup = /backup')
 
 
 def split_coco_images(dataset_path: str, train: list, test: list, val: list) -> None:

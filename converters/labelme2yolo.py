@@ -38,7 +38,7 @@ class Converter2yolo(Converter):
         with open(f"{output_path}/{YOLO_NAME}/dataset.data", 'w') as wd:
             wd.write(f"classes = {len(LABELS_ID.keys())} \n")
             wd.write(f"train = {output_path}/dataset_train_test_val.txt \n")
-            wd.write('backup = path/to/backup/directory')
+            wd.write('backup = /backup')
 
     def _convert_image_data(self, image_data: dict, ann_path: str) -> None:
         """
