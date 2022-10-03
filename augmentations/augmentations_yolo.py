@@ -1,3 +1,4 @@
+import os
 import cv2
 import numpy as np
 
@@ -176,7 +177,11 @@ def augment_image(dataset_path: str, img_filename: str, i_image: int, subset_fil
 
     # Update new subset txt file.
     with open(f'{dataset_path}/{YOLO_NAME}/{subset_filename}', 'a') as at:
-        at.write(f"{SCRIPT_PATH}/{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.{ext}\n")
+        # at.write(f"{SCRIPT_PATH}/{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.{ext}\n")
+        if os.path.isabs(dataset_path):
+            at.write(f"{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.{ext}\n")
+        else:
+            at.write(f"{SCRIPT_PATH}/{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.{ext}\n")
 
     # Create new marked image.
     marked_image = create_mark_image(aug_dict)
