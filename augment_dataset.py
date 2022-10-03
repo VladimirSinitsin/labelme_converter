@@ -1,3 +1,4 @@
+import os
 import argparse
 
 from utils.format_specifier import format_name
@@ -18,6 +19,9 @@ COUNT = 5
 
 def main():
     args = parse_args()
+    # If ~ in the paths.
+    args.input_path = os.path.expanduser(args.input_path)
+    args.output_path = os.path.expanduser(args.output_path)
 
     subsets = []
     if args.full:

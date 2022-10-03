@@ -1,3 +1,4 @@
+import os
 import argparse
 
 from distutils.dir_util import copy_tree
@@ -18,6 +19,9 @@ NEW_H = 640
 
 def main():
     args = parse_args()
+    # If ~ in the paths.
+    args.input_path = os.path.expanduser(args.input_path)
+    args.output_path = os.path.expanduser(args.output_path)
 
     make_empty_folder(args.output_path)
     copy_tree(args.input_path, args.output_path)

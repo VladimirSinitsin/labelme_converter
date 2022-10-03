@@ -1,3 +1,4 @@
+import os
 import argparse
 
 from utils.format_specifier import format_name
@@ -15,6 +16,8 @@ SAVE_PATH = '###'  # '###' = in dataset dir
 
 def main():
     args = parse_args()
+    # If ~ in the path.
+    args.input_path = os.path.expanduser(args.input_path)
 
     save_path = args.save_path if args.save_path != '###' else args.input_path
 

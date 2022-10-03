@@ -1,3 +1,4 @@
+import os
 import argparse
 
 from converters.labelme2yolo import Converter2yolo
@@ -19,6 +20,9 @@ CONVERTERS = {'yolo': Converter2yolo,
 
 def main():
     args = parse_args()
+    # If ~ in the paths.
+    args.input_path = os.path.expanduser(args.input_path)
+    args.output_path = os.path.expanduser(args.output_path)
 
     converter_class = CONVERTERS[args.format]
     converter = converter_class(input_path=args.input_path,

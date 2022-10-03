@@ -29,6 +29,9 @@ SEED = 42
 
 def main():
     args = parse_args()
+    # If ~ in the paths.
+    args.input_path = os.path.expanduser(args.input_path)
+    args.output_path = os.path.expanduser(args.output_path)
 
     random.seed(args.seed)
 
