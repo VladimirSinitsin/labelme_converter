@@ -18,7 +18,7 @@ sys.path.append(SCRIPT_PATH)
 # Get labels and labels ids.
 LABELS_ID = {}
 with open(f"{SCRIPT_PATH}/{LABELS_FILE}", 'r') as lr:
-    LABELS = lr.read().split('\n')
+    LABELS = [line.strip() for line in lr.readlines() if line.strip()]
 for id, label in enumerate(LABELS):
     LABELS_ID[label] = id
 
