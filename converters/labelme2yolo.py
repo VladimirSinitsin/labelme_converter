@@ -1,3 +1,5 @@
+import os
+
 from tqdm import tqdm
 
 from converters import Converter
@@ -78,4 +80,7 @@ class Converter2yolo(Converter):
 
     def _write_set_row(self, image_filename: str):
         with open(f"{self.output_path}/{YOLO_NAME}/train_test_val.txt", 'a') as wt:
-            wt.write(f"{SCRIPT_PATH}/{self.output_path}/{YOLO_NAME}/dataset_data/{image_filename}\n")
+            if os.path.isabs(self.output_path):
+                wt.write(f"{self.output_path}/{YOLO_NAME}/dataset_data/{image_filename}\n")
+            else:
+                wt.write(f"{SCRIPT_PATH}/{self.output_path}/{YOLO_NAME}/dataset_data/{image_filename}\n")
