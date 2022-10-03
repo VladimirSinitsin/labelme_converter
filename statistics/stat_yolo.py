@@ -56,12 +56,12 @@ def update_stat(dataset_path: str, subset_stat: dict, img_name: str) -> dict:
     :param img_name: name of current image.
     :return: updated statistic dictionary.
     """
-    image = cv2.imread(f'{dataset_path}/{YOLO_NAME}/dataset_data/{img_name}')
+    image = cv2.imread(f'{dataset_path}/{YOLO_NAME}/obj/{img_name}')
     img_w = image.shape[1]
     img_h = image.shape[0]
 
     base_name = img_name.split('.')[0]
-    with open(f'{dataset_path}/{YOLO_NAME}/dataset_data/{base_name}.txt', 'r') as rt:
+    with open(f'{dataset_path}/{YOLO_NAME}/obj/{base_name}.txt', 'r') as rt:
         annotations = rt.read().split('\n')
     for ann in [item for item in annotations if item]:
         label_id, x, y, w, h = [float(item) for item in ann.split(' ') if item]

@@ -115,7 +115,7 @@ def split_yolo(dataset_path: str, proportions: list, seed: int) -> None:
         with open(f'{dataset_path}/{YOLO_NAME}/trainval.txt', 'a') as fa:
             fa.writelines(subset)
 
-    # Update dataset.data file.
+    # Update obj.data file.
     update_yolo_data(dataset_path)
 
     # Remove old file with all filenames.
@@ -215,15 +215,15 @@ def split_list(data: list, proportions: list, seed: int) -> list:
 
 def update_yolo_data(dataset_path: str) -> None:
     """
-    Update dataset.data file after split.
+    Update obj.data file after split.
 
     :param dataset_path: path to dataset.
     """
-    with open(f'{dataset_path}/{YOLO_NAME}/dataset.data', 'w') as wd:
+    with open(f'{dataset_path}/{YOLO_NAME}/obj.data', 'w') as wd:
         wd.write(f'classes = {len(LABELS_ID.keys())} \n')
-        wd.write(f'train = {dataset_path}/{YOLO_NAME}/trainval.txt \n')
-        wd.write(f'valid = {dataset_path}/{YOLO_NAME}/test.txt \n')
-        wd.write(f'names = {dataset_path}/{YOLO_NAME}/dataset.names \n')
+        wd.write(f'train = data/trainval.txt \n')
+        wd.write(f'valid = data/test.txt \n')
+        wd.write(f'names = data/obj.names \n')
         wd.write('backup = /backup')
 
 

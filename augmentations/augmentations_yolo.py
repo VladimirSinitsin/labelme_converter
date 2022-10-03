@@ -30,7 +30,7 @@ def augment_yolo(dataset_path: str, output_path: str, subsets: list, count: int)
     make_empty_folder(output_path)
     # Copy source dataset in `output_path` for augment it.
     copy_tree(dataset_path, output_path)
-    # Update paths in dataset.data file.
+    # Update paths in obj.data file.
     update_data_file(dataset_path, output_path)
 
     if is_splitted(output_path):
@@ -51,17 +51,17 @@ def augment_yolo(dataset_path: str, output_path: str, subsets: list, count: int)
 
 def update_data_file(dataset_path: str, output_path: str) -> None:
     """
-    Update paths in dataset.data file.
+    Update paths in obj.data file.
 
     :param dataset_path: old path to dataset.
     :param output_path: new path to dataset.
     """
     old_dir = dataset_path.split('/')[-1]
     new_dir = output_path.split('/')[-1]
-    with open(f'{output_path}/{YOLO_NAME}/dataset.data', 'r') as rd:
+    with open(f'{output_path}/{YOLO_NAME}/obj.data', 'r') as rd:
         text = rd.read()
     text = text.replace(old_dir, new_dir)
-    with open(f'{output_path}/{YOLO_NAME}/dataset.data', 'w') as wd:
+    with open(f'{output_path}/{YOLO_NAME}/obj.data', 'w') as wd:
         wd.write(text)
 
 
@@ -125,8 +125,8 @@ def augment_subset(dataset_path: str, subset: str, count: int) -> None:
         for i_image in range(count):
             augment_image(dataset_path, img_name, i_image, txt_file)
         # Delete source image and txt file with annotation.
-        safe_delete_file(f"{dataset_path}/{YOLO_NAME}/dataset_data/{img_name.split('.')[0] + '.txt'}")
-        safe_delete_file(f'{dataset_path}/{YOLO_NAME}/dataset_data/{img_name}')
+        safe_delete_file(f"{dataset_path}/{YOLO_NAME}/obj/{img_name.split('.')[0] + '.txt'}")
+        safe_delete_file(f'{dataset_path}/{YOLO_NAME}/obj/{img_name}')
 
 
 def get_imagenames_set(file_set_path: str) -> list:
@@ -154,7 +154,7 @@ def augment_image(dataset_path: str, img_filename: str, i_image: int, subset_fil
     :param i_image: copy index.
     :param subset_filename: name of subset txt file.
     """
-    image = cv2.imread(f'{dataset_path}/{YOLO_NAME}/dataset_data/{img_filename}')
+    image = cv2.imread(f'{dataset_path}/{YOLO_NAME}/obj/{img_filename}')
 
     base_name, ext = img_filename.split('.')
     bboxes, categories = get_bbox_cat(dataset_path, base_name)
@@ -166,17 +166,17 @@ def augment_image(dataset_path: str, img_filename: str, i_image: int, subset_fil
     aug_categories = aug_dict['classes_ids']
 
     # Save augmented image.
-    save_path = f'{dataset_path}/{YOLO_NAME}/dataset_data/{base_name}_{i_image}.{ext}'
+    save_path = f'{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.{ext}'
     cv2.imwrite(save_path, aug_image)
 
     # Save new annotation.
     new_annotation = create_ann(aug_bboxes, aug_categories)
-    with open(f'{dataset_path}/{YOLO_NAME}/dataset_data/{base_name}_{i_image}.txt', 'w') as wt:
+    with open(f'{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.txt', 'w') as wt:
         wt.write(new_annotation)
 
     # Update new subset txt file.
     with open(f'{dataset_path}/{YOLO_NAME}/{subset_filename}', 'a') as at:
-        at.write(f"{SCRIPT_PATH}/{dataset_path}/{YOLO_NAME}/dataset_data/{base_name}_{i_image}.{ext}\n")
+        at.write(f"{SCRIPT_PATH}/{dataset_path}/{YOLO_NAME}/obj/{base_name}_{i_image}.{ext}\n")
 
     # Create new marked image.
     marked_image = create_mark_image(aug_dict)
@@ -194,7 +194,7 @@ def get_bbox_cat(dataset_path: str, base_name: str) -> Tuple[list, list]:
     :return: lists of bboxes and categories.
     """
     txt_filename = base_name + '.txt'
-    with open(f'{dataset_path}/{YOLO_NAME}/dataset_data/{txt_filename}', 'r') as tr:
+    with open(f'{dataset_path}/{YOLO_NAME}/obj/{txt_filename}', 'r') as tr:
         lines = tr.readlines()
 
     bboxes = []

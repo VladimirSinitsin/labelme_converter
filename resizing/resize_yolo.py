@@ -18,7 +18,7 @@ def resize(dataset_path: str, new_h: int, new_w: int) -> None:
     :param new_w: new width of images.
     """
     # If .png or .jpg or .JPEG.
-    img_names = [file for file in os.listdir(f'{dataset_path}/{YOLO_NAME}/dataset_data') if not file.endswith('.txt')]
+    img_names = [file for file in os.listdir(f'{dataset_path}/{YOLO_NAME}/obj') if not file.endswith('.txt')]
     print('Resize:')
     for img_filename in tqdm(img_names):
         resize_image_data(dataset_path, img_filename, new_w, new_h)
@@ -34,8 +34,8 @@ def resize_image_data(dataset_path: str, img_filename: str, new_w: int, new_h: i
     :param new_h: new height of image.
     """
     ann_file = img_filename.replace(img_filename.split('.')[-1], 'txt')
-    img_path = f'{dataset_path}/{YOLO_NAME}/dataset_data/{img_filename}'
-    ann_path = f'{dataset_path}/{YOLO_NAME}/dataset_data/{ann_file}'
+    img_path = f'{dataset_path}/{YOLO_NAME}/obj/{img_filename}'
+    ann_path = f'{dataset_path}/{YOLO_NAME}/obj/{ann_file}'
     viz_path = f'{dataset_path}/MarkedImages/marked_{img_filename}'
 
     resize_annotation(ann_path, img_path, new_w, new_h)
